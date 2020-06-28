@@ -21,8 +21,8 @@ func isURL(str string) bool {
 
 func render(options *convert.Options, img image.Image) string {
 	imgSize := img.Bounds().Size()
-	width, height := float64(imgSize.X), float64(imgSize.Y)
-	target := 2000.0
+	width, height := float64(imgSize.X)*2, float64(imgSize.Y)
+	target := 1950.0
 	divider := math.Sqrt(width*height) / math.Sqrt(target)
 	newWidth, newHeight := int(math.Floor(width/divider)), int(math.Floor(height/divider))
 
