@@ -19,8 +19,9 @@ func isURL(str string) bool {
 	return err == nil && u.Scheme != "" && u.Host != ""
 }
 
-func render(options *convert.Options, image image.Image) string {
-	width, height := 300.0, 200.0
+func render(options *convert.Options, img image.Image) string {
+	imgSize := img.Bounds().Size()
+	width, height := float64(imgSize.X), float64(imgSize.Y)
 	target := 2000.0
 	divider := math.Sqrt(width*height) / math.Sqrt(target)
 	newWidth, newHeight := int(math.Floor(width/divider)), int(math.Floor(height/divider))
@@ -29,7 +30,7 @@ func render(options *convert.Options, image image.Image) string {
 	options.FixedWidth = newWidth
 
 	converter := convert.NewImageConverter()
-	result := converter.Image2ASCIIString(image, options)
+	result := converter.Image2ASCIIString(img, options)
 
 	return result
 }
