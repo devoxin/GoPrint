@@ -48,14 +48,10 @@ func downloadImage(url string) (image.Image, error) {
 
 	defer res.Body.Close()
 
-	imageData, imageType, err := image.Decode(res.Body)
+	imageData, _, err := image.Decode(res.Body)
 
 	if err != nil {
 		return nil, err
-	}
-
-	if imageType != "png" && imageType != "jpg" && imageType != "jpeg" {
-		return nil, fmt.Errorf("Unsupported image type %s", imageType)
 	}
 
 	return imageData, nil
