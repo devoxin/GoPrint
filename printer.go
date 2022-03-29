@@ -10,6 +10,8 @@ import (
 	"net/http"
 	"net/url"
 
+	"github.com/kolesa-team/go-webp/decoder"
+	"github.com/kolesa-team/go-webp/webp"
 	"github.com/qeesung/image2ascii/convert"
 )
 
@@ -91,7 +93,13 @@ func handlePrinter(w http.ResponseWriter, req *http.Request) {
 	w.Write([]byte(result))
 }
 
+func decodeWebp(reader io.Reader) (image.Image, error) {
+	return webp.Decode(reader, &decoder.Options{})
+}
+
 func main() {
+	image.RegisterFormat("webp", "RIFF????WEBPVP8", decodeWebp, nil)
+
 	http.HandleFunc("/printer", handlePrinter)
 	err := http.ListenAndServe(":7080", nil)
 
